@@ -1,0 +1,87 @@
+".container": {
+	"backgroundColor" : "white"
+}
+
+".first-section": {
+    "backgroundColor" : "white",
+    "top"             : "0",
+    "left"            : "0",
+    "width"           : "100%",
+    "height"          : "30%",
+}
+
+".second-section": {
+    "backgroundColor" : "white",
+    "top"             : "30%",
+    "left"            : "0",
+    "width"           : "100%",
+    "height "         : "30%",
+}
+
+".third-section": {
+    "backgroundColor" : "white",
+    "top"             : "60%",
+    "left"            : "0",
+    "width"           : "100%",
+    "height "         : "30%",
+}
+
+".first-section-btn": {
+    "color"           : "white",
+    "backgroundColor" : "darkGray",
+    "borderColor"     : "black",
+    "width"           : "45%",
+    "height"          : "32%",
+}
+
+".second-section-btn": {
+    "color"           : "white",
+    "backgroundColor" : "darkGray",
+    "borderColor"     : "black",
+    "left"            : "60%",
+    "width"           : "35%",
+    "height"          : "32%",
+}
+
+".second-section-textfield": {
+    "color"           : "black",
+    "backgroundColor" : "white",
+    "borderColor"     : "black",
+    "borderStyle"     : "Ti.UI.INPUT_BORDERSTYLE_ROUNDED",
+    "width"           : "55%",
+    "height"          : "32%",
+}
+
+".third-section-btn": {
+    "color"           : "white",
+    "backgroundColor" : "darkGray",
+    "borderColor"     : "black",
+    "left"            : "60%",
+    "width"           : "35%",
+    "height"          : "32%",
+}
+
+".third-section-textarea": {
+    "color"           : "black",
+    "backgroundColor" : "white",
+    "borderColor"     : "black",
+    "borderStyle"     : "Ti.UI.INPUT_BORDERSTYLE_ROUNDED",
+    "width"           : "55%",
+    "height"          : "32%",
+}
+
+".menu-left" : {
+    "left"  : "3%"
+}
+
+".menu-right": {
+    "left"  : "53%"
+}
+
+".first-layer" : {
+    "top"   : "20%"
+}
+
+".second-layer" : {
+    "top"   : "60%"
+}

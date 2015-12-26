@@ -1,0 +1,20 @@
+<Alloy>
+	<Window id="window" class="container">
+        <View class="first-section">
+            <Button class="first-section-btn first-layer menu-left" title="get Session" id="getSessionButton"/>
+            <Button class="first-section-btn first-layer menu-right" title="get Install" id="getInstallSessionButton"/>
+        </View>
+        <View class="second-section">
+            <Button class="second-section-btn first-layer" title="set Indentity" id="setIndentityButton"/>
+            <Button class="second-section-btn second-layer" title="custom Action" id="customActionButton"/>
+            <TextField class="second-section-textfield first-layer menu-left" id="identityTextField"/>
+            <TextField class="second-section-textfield second-layer menu-left" id="customActionTextField"/>
+        </View>
+        <View class="third-section">
+            <Button class="third-section-btn first-layer small-btn small-btn-first" title="Reward Balance" id="rewardBalanceButton"/>
+            <Button class="third-section-btn first-layer small-btn small-btn-second" title="Redeem 5 Rewards" id="redeemRewardButton"/>
+            <Button class="third-section-btn first-layer small-btn small-btn-third" title="Credit History" id="creditHistoryButton"/>
+            <Button class="third-section-btn second-layer" title="Branch Universal Object" id="branchUniversalButton"/>
+        </View>
+    </Window>
+</Alloy>
