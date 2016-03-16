@@ -491,6 +491,25 @@ bool applicationContinueUserActivity(id self, SEL _cmd, UIApplication* applicati
     }];
 }
 
+#pragma mark - Promotion Codes
+- (void)applyPromoCode:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSString);
+    
+    NSLog([NSString stringWithFormat:@"[Branch] Applying code %@", args]);
+    
+    [[self getInstance] applyPromoCode:args callback:^(NSDictionary *params, NSError *error) {
+        NSLog(@"Apply code callback");
+        
+        if (error == nil) {
+            [self fireEvent:@"bio:applyPromoCode" withObject:@{@"code": args}];
+        } else {
+            [self fireEvent:@"bio:applyPromoCode" withObject:@{@"error":[error localizedDescription]}];
+        }
+
+    }];
+}
+
 
 #pragma mark - logout
 

@@ -206,7 +206,7 @@ ___
 3. Referral System Rewarding
   + [.loadRewards()](#loadrewards)
   + [.redeemRewards(value)](#redeemrewards-value)
-  + [.creditHistory()](#get-credit-history)
+  + [.getCreditHistory()](#get-credit-history)
 
 ___
 
@@ -560,10 +560,10 @@ This call will retrieve the entire history of credits and redemptions from the i
 implement like so:
 
 ```js
-branch.creditHistory();
+branch.getCreditHistory();
 ```
 
-Then implement the callback, by adding a listener to the event `bio:creditHistory`.
+Then implement the callback, by adding a listener to the event `bio:getCreditHistory`.
 
 The response will return an array that has been parsed from the following JSON:
 
