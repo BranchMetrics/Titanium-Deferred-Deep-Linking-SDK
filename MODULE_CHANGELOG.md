@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the Branch Titanium SDK will be documented here.
 
+## [v1.3.0] - 2016-09-02
+- **Android**: Updated SDK to v2.2.0
+- **iOS**: Updated SDK to v0.12.6
+
 ## [v1.2.2] - 2016-08-26
 - **iOS**: Fixed share sheet crash for iPad.
 
