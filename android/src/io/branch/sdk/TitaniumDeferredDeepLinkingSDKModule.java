@@ -53,6 +53,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "inside onAppCreate");
 		// put module init code that needs to run when the application is created
+        final Branch instance = Branch.getAutoInstance(TiApplication.getInstance());
+
 	}
 
 	// Test methods
@@ -82,8 +84,6 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start init");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getAutoInstance(TiApplication.getInstance());
-
 		instance.initSession(new SessionListener(), activity.getIntent().getData(), activity);
 	}
 
