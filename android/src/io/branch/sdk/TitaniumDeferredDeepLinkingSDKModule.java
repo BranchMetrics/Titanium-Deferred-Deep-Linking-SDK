@@ -39,6 +39,7 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	// Standard Debugging variables
 	private static final String LCAT = "TitaniumDeferredDeepLinkingSDKModule";
 	private static final boolean DBG = TiConfig.LOGD;
+    private static Branch branchInstance_;
 
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
@@ -53,6 +54,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "inside onAppCreate");
 		// put module init code that needs to run when the application is created
+        branchInstance_ = Branch.getAutoInstance(TiApplication.getInstance());
+
 	}
 
 	// Test methods
@@ -82,9 +85,7 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start init");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getAutoInstance(TiApplication.getInstance());
-
-		instance.initSession(new SessionListener(), activity.getIntent().getData(), activity);
+		branchInstance_.initSession(new SessionListener(), activity.getIntent().getData(), activity);
 	}
 
 	@Kroll.method
@@ -92,13 +93,11 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start init");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getAutoInstance(TiApplication.getInstance());
-
 		if (data == null) {
-			instance.initSession(new SessionListener(), activity.getIntent().getData(), activity);
+			branchInstance_.initSession(new SessionListener(), activity.getIntent().getData(), activity);
 		} else {
 			Uri uri = Uri.parse(data);
-			instance.initSession(new SessionListener(), uri, activity);
+			branchInstance_.initSession(new SessionListener(), uri, activity);
 		}
 	}
 
@@ -107,9 +106,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start getLatestReferringParams");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
-
-		JSONObject sessionParams = instance.getLatestReferringParams();
+		
+		JSONObject sessionParams = branchInstance_.getLatestReferringParams();
 		if (sessionParams == null) {
     		Log.d(LCAT, "return is null");
     		return null;
@@ -126,9 +124,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start getFirstReferringParams");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
-
-		JSONObject installParams = instance.getFirstReferringParams();
+		
+		JSONObject installParams = branchInstance_.getFirstReferringParams();
 		if (installParams == null) {
     		Log.d(LCAT, "return is null");
     		return null;
@@ -145,9 +142,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start setIdentity");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
-
-		instance.setIdentity(identity);
+		
+		branchInstance_.setIdentity(identity);
 	}
 
 	@Kroll.method
@@ -155,9 +151,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start userCompletedAction");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
 
-		instance.userCompletedAction(action);
+		branchInstance_.userCompletedAction(action);
 	}
 
 	@Kroll.method
@@ -165,9 +160,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start userCompletedAction with appState");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
 
-		instance.userCompletedAction(action, appState);
+		branchInstance_.userCompletedAction(action, appState);
 	}
 
 	@Kroll.method
@@ -175,9 +169,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start loadRewards");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
-
-		instance.loadRewards(new LoadRewardsListener());
+		
+		branchInstance_.loadRewards(new LoadRewardsListener());
 	}
 
 	@Kroll.method
@@ -185,9 +178,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start redeemRewards");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
-
-		instance.redeemRewards(value);
+		
+		branchInstance_.redeemRewards(value);
 	}
 
 	@Kroll.method
@@ -195,20 +187,17 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	{
 		Log.d(LCAT, "start getCreditHistory");
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
 
-		instance.getCreditHistory(new CreditHistoryListener());
+		branchInstance_.getCreditHistory(new CreditHistoryListener());
 	}
 
 	@Kroll.method
 	public void logout()
 	{
 		Log.d(LCAT, "start logout");
-
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
 
-		instance.logout(new LogoutListener());
+		branchInstance_.logout(new LogoutListener());
 	}
 
 	@Kroll.method
@@ -217,9 +206,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 		Log.d(LCAT, "start getCredits");
 		KrollDict response = new KrollDict();
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
 
-		int credits = instance.getCredits();
+		int credits = branchInstance_.getCredits();
 		response.put("bucket", "default");
 	    response.put("credits", credits);
 
@@ -239,9 +227,8 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 		Log.d(LCAT, "start getCreditsForBucket" + bucket);
 
 		final Activity activity = this.getActivity();
-		final Branch instance = Branch.getInstance(activity);
-
-		int credits =instance.getCreditsForBucket(bucket);
+		
+		int credits =branchInstance_.getCreditsForBucket(bucket);
 		response.put("bucket", bucket);
 	    response.put("credits", credits);
 
@@ -388,8 +375,7 @@ public class TitaniumDeferredDeepLinkingSDKModule extends KrollModule
 	        if (error == null) {
 	            // will return the balance of the current user's credits
 	            final Activity activity = self.getActivity();
-				final Branch instance = Branch.getInstance(activity);
-	        	int credits = instance.getCredits();
+				int credits = branchInstance_.getCredits();
 	        	response.put("credits", credits);
 	        } else {
 	        	String errorMessage = error.getMessage();
