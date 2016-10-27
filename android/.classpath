@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="/Users/renesansz/Library/Application Support/Titanium/mobilesdk/osx/5.3.0.GA/android/titanium.jar"/>
 	<classpathentry kind="lib" path="/Users/renesansz/Library/Application Support/Titanium/mobilesdk/osx/5.3.0.GA/android/kroll-common.jar"/>
 	<classpathentry kind="lib" path="/Users/renesansz/Library/Application Support/Titanium/mobilesdk/osx/5.3.0.GA/android/kroll-apt.jar"/>
-    <classpathentry kind="lib" path="android/lib/Branch-2.0.2.jar"/>
+    <classpathentry kind="lib" path="android/lib/Branch-2.4.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

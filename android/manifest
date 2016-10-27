@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.2.2
+version: 1.4.0
 apiversion: 2
 architectures: armeabi armeabi-v7a x86
 description: Titanium-Deferred-Deep-Linking-SDK

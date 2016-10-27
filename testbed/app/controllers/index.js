@@ -10,11 +10,30 @@ $.initialize = function(params) {
     $.initializeViews();
     $.initializeHandlers();
 
-    $.window.open();
+    if (OS_IOS) {
 
-    Ti.API.info("start initSession");
-    
-    branch.initSession();
+        $.window.open();
+
+        Ti.API.info("start initSession");
+        
+        branch.initSession();
+
+    } else if (OS_ANDROID){
+
+        $.window.open();
+
+        Ti.Android.currentActivity.setOnStart(function(e){ 
+            Ti.API.info('onStart' + JSON.stringify(e));
+            branch.initSession();
+        });
+
+        Ti.Android.currentActivity.addEventListener("newintent", function(e) {
+            Ti.API.info("inside newintent: " + JSON.stringify(e));
+            $.window.open();
+            branch.updateIntent(e.intent);
+            
+        });
+    }
 };
 
 $.initializeViews = function() {
@@ -35,17 +54,7 @@ $.initializeHandlers = function() {
         });
 
         activity.becomeCurrent();
-    } else if (OS_ANDROID) {
-        Ti.Android.currentActivity.addEventListener("open", function(e) {
-            Ti.API.info("inside open");
-        });
-
-        Ti.Android.currentActivity.addEventListener("newintent", function(e) {
-            Ti.API.info("inside newintent: " + JSON.stringify(e.intent.data));
-            $.window.open();
-            branch.initSessionWithData(e.intent.data);
-        });
-    }
+    } 
 
     $.getSessionButton.addEventListener('click', $.onGetSessionButtonClicked);
     $.getInstallSessionButton.addEventListener('click', $.onGetInstallSessionButtonClicked);

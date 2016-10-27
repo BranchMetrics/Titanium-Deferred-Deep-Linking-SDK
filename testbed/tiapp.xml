@@ -3,7 +3,7 @@
   xmlns:ti="http://ti.appcelerator.org">
   <id>io.branch.testbed</id>
   <name>testbed</name>
-  <version>1.1.2</version>
+  <version>1.4.0</version>
   <publisher>Branch Metrics Ltd.</publisher>
   <url>http://www.branch.io</url>
   <description/>
@@ -12,7 +12,7 @@
   <fullscreen>false</fullscreen>
   <navbar-hidden>false</navbar-hidden>
   <analytics>true</analytics>
-  <guid>f81b5c3c-947d-4947-9222-664391632e87</guid>
+  <guid>b87bfa4d-d745-494e-9467-5e2fd1f49586</guid>
   <property name="ti.ui.defaultunit" type="string">dp</property>
   <ios>
     <plist>
@@ -43,7 +43,7 @@
         </array>
         <!-- Add branch key as key-value pair -->
         <key>branch_key</key>
-        <string>key_live_xxxxxxx</string>
+        <string>key_live_kbDcpHTPpJquSpTeJFVqBdenDAcko3QG</string>
         <key>CFBundleURLTypes</key>
         <array>
           <dict>
@@ -63,10 +63,10 @@
       <application>
         <!-- Set to true to use Branch_Test_Key -->
         <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
-        <!-- Add this meta-data below, and change "key_live_xxxxxxx" to your actual live Branch key -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_xxxxxxx" />
+        <!-- Add this meta-data below, and change "key_live_kbDcpHTPpJquSpTeJFVqBdenDAcko3QG" to your actual live Branch key -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_kbDcpHTPpJquSpTeJFVqBdenDAcko3QG" />
         <!-- For your test app, if you have one; Again, use your actual test Branch key -->
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_yyyyyyy" />
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_live_kbDcpHTPpJquSpTeJFVqBdenDAcko3QG" />
         <activity
           android:name=".TestbedActivity"
           android:label="@string/app_name"
@@ -114,7 +114,7 @@
     <target device="ipad">true</target>
     <target device="iphone">true</target>
   </deployment-targets>
-  <sdk-version>5.2.1.GA</sdk-version>
+  <sdk-version>5.5.0.GA</sdk-version>
   <plugins>
     <plugin version="1.0">ti.alloy</plugin>
   </plugins>
