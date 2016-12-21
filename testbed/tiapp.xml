@@ -15,6 +15,7 @@
   <guid>b87bfa4d-d745-494e-9467-5e2fd1f49586</guid>
   <property name="ti.ui.defaultunit" type="string">dp</property>
   <ios>
+    <team-id>4XE8MVRXHY</team-id>
     <plist>
       <dict>
         <key>UISupportedInterfaceOrientations~iphone</key>
@@ -114,7 +115,7 @@
     <target device="ipad">true</target>
     <target device="iphone">true</target>
   </deployment-targets>
-  <sdk-version>5.5.0.GA</sdk-version>
+  <sdk-version>5.5.2.v20160928154513</sdk-version>
   <plugins>
     <plugin version="1.0">ti.alloy</plugin>
   </plugins>

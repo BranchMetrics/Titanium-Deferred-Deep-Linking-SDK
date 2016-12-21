@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8CD2D63E-E1B8-4C7B-9458-F98C5A8683C3",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "1929DBD069E43FB109A10D27981BC0AD82070E33" : "iOS-Deferred-Deep-Linking-SDK\/",
-    "FCE26EE99C32189D23633F320DDF00D37641003B" : "Titanium-Deferred-Deep-Linking-SDK\/"
+    "FCE26EE99C32189D23633F320DDF00D37641003B" : "titanium-branch-deep-linking\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Titanium-Deferred-Deep-Linking-SDK",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,

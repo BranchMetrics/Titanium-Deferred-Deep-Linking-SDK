@@ -17,6 +17,10 @@
 #import "Branch-SDK/Branch.h"
 
 #import <objc/runtime.h>
+#import "JRSwizzle.h"
+
+#undef USE_TI_APPIOS
+#define USE_TI_APPIOS 1
 
 @implementation TiApp (Branch)
 
@@ -31,10 +35,68 @@ bool applicationOpenURLSourceApplication(id self, SEL _cmd, UIApplication* appli
 
     return YES;
 }
+- (BOOL)iobranchApplication:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity
+ restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler
+{
+    NSLog(@"[INFO] -- YourModule#application:continueUserActivity:restorationHandler --");
 
+    BOOL result = [[Branch getInstance] continueUserActivity:userActivity];
+    NSLog(result ? @"Yes" : @"No");
+
+    [self iobranchApplication:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+
+    return YES;
+}
+
+- (BOOL)iobranchApplication:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions_
+{
+    Branch *branch = [Branch getInstance];
+    NSLog(@"[INFO] -- YourModule#application:didFinishLaunchingWithOptions --");
+    NSLog(@"[INFO] -- %@",launchOptions_);
+
+    //[branch accountForFacebookSDKPreventingAppLaunch];
+
+    [branch initSessionWithLaunchOptions:launchOptions_
+        automaticallyDisplayDeepLinkController:NO
+        deepLinkHandler:^(NSDictionary *params, NSError *error) {
+        NSLog(@"initSession1 succeeded with params: %@", params);
+        if (!error) {
+            NSLog(@"initSession2 succeeded with params: %@", params);
+            //[self fireEvent:@"bio:initSession" withObject:params];
+        }
+        else {
+            NSLog(@"initSession failed %@", error);
+            //[self fireEvent:@"bio:initSession" withObject:@{@"error":[error localizedDescription]}];
+        }
+    }];
+
+    [self iobranchApplication:application didFinishLaunchingWithOptions:launchOptions_];
+    return YES;
+
+}
 @end
 
 @implementation IoBranchSdkModule
+
++ (void)load {
+    NSError *error = nil;
+    [TiApp jr_swizzleMethod:@selector(application:continueUserActivity:restorationHandler:)
+                 withMethod:@selector(iobranchApplication:continueUserActivity:restorationHandler:)
+                      error:&error];
+    
+    if(error)
+        NSLog(@"[WARN] Cannot swizzle application:continueUserActivity:restorationHandler: %@", error);
+
+
+    // NSError *error2 = nil;
+    // [TiApp jr_swizzleMethod:@selector(application:didFinishLaunchingWithOptions:)
+    //              withMethod:@selector(iobranchApplication:didFinishLaunchingWithOptions:)
+    //                   error:&error];
+    
+    // if(error2)
+    //     NSLog(@"[WARN] Cannot swizzle iobranchApplicationDidFinishLaunching %@", error2);
+
+}
 
 #pragma mark - Swizzling Methods
 
@@ -125,16 +187,7 @@ bool applicationOpenURLSourceApplication(id self, SEL _cmd, UIApplication* appli
         // switch implemention of openURL method
         method_exchangeImplementations(m1, u1);
 
-        __block IMP implementation = [IoBranchSdkModule swizzleClassWithClassname:NSStringFromClass(objectClass) originalSelector:@selector(application:continueUserActivity:restorationHandler:) block:^BOOL (id blockSelf, UIApplication *application, NSUserActivity *userActivity, id restorationHandler){
-            BOOL result = [[Branch getInstance] continueUserActivity:userActivity];
-            
-            if (!result && implementation) {
-                BOOL (*func)() = (void *)implementation;
-                return func(blockSelf, @selector(application:continueUserActivity:restorationHandler:), application, userActivity, restorationHandler);
-            }
-            
-            return NO;
-        }];
+        
 
         objc_registerClassPair(modDelegate);
     }
@@ -184,26 +237,6 @@ bool applicationOpenURLSourceApplication(id self, SEL _cmd, UIApplication* appli
 }
 
 
-#pragma mark - Test Methods
-
--(id)example:(id)args
-{
-    // example method
-    return @"hello world";
-}
-
--(id)exampleProp
-{
-    // example property getter
-    return @"hello world";
-}
-
--(void)setExampleProp:(id)value
-{
-    // example property setter
-}
-
-#pragma mark Public APIs
 #pragma mark - Global Instance Accessors
 
 - (Branch *)getInstance
@@ -229,16 +262,23 @@ bool applicationOpenURLSourceApplication(id self, SEL _cmd, UIApplication* appli
 #pragma mark - InitSession Permutation methods
 
 - (void)initSession:(id)args
-{
-    Branch *branch = [self getInstance];
+{   
+    NSLog(@"www initSession");
+    Branch *branch = [Branch getInstance];
 
     NSDictionary *launchOptions = [[TiApp app] launchOptions];
+    [branch accountForFacebookSDKPreventingAppLaunch];
 
-    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+    [branch initSessionWithLaunchOptions:launchOptions
+        automaticallyDisplayDeepLinkController:NO
+        deepLinkHandler:^(NSDictionary *params, NSError *error) {
+        NSLog(@"initSession succeeded with params: %@", params);
         if (!error) {
+            NSLog(@"initSession succeeded with params: %@", params);
             [self fireEvent:@"bio:initSession" withObject:params];
         }
         else {
+            NSLog(@"initSession failed %@", error);
             [self fireEvent:@"bio:initSession" withObject:@{@"error":[error localizedDescription]}];
         }
     }];
@@ -373,30 +413,30 @@ bool applicationOpenURLSourceApplication(id self, SEL _cmd, UIApplication* appli
 }
 
 
-#pragma mark - register controller
+// #pragma mark - register controller
 
-- (void)registerDeepLinkController:(id)args
-{
-    ENSURE_SINGLE_ARG(args, NSString);
+// - (void)registerDeepLinkController:(id)args
+// {
+//     ENSURE_SINGLE_ARG(args, NSString);
 
-    UIViewController <BranchDeepLinkingController> *controller = (UIViewController <BranchDeepLinkingController>*)[TiApp app].controller;
-    Branch *branch = [self getInstance];
+//     UIViewController <BranchDeepLinkingController> *controller = (UIViewController <BranchDeepLinkingController>*)[TiApp app].controller;
+//     Branch *branch = [self getInstance];
 
-    [branch registerDeepLinkController:controller forKey:args];
-}
+//     [branch registerDeepLinkController:controller forKey:args];
+// }
 
 
-#pragma mark - handle deep link
+// #pragma mark - handle deep link
 
-- (id)handleDeepLink:(id)args
-{
-    ENSURE_SINGLE_ARG(args, NSString);
-    NSString *arg = [args objectAtIndex:0];
-    NSURL *url = [NSURL URLWithString:arg];
+// - (id)handleDeepLink:(id)args
+// {
+//     ENSURE_SINGLE_ARG(args, NSString);
+//     NSString *arg = [args objectAtIndex:0];
+//     NSURL *url = [NSURL URLWithString:arg];
 
-    Branch *branch = [self getInstance];
-    return NUMBOOL([branch handleDeepLink:url]);
-}
+//     Branch *branch = [self getInstance];
+//     return NUMBOOL([branch handleDeepLink:url]);
+// }
 
 
 #pragma mark - URL methods
@@ -598,29 +638,29 @@ bool applicationOpenURLSourceApplication(id self, SEL _cmd, UIApplication* appli
     }
 }
 
-
 #pragma mark - continue user activity
 
 - (void)continueUserActivity:(id)args
 {
+
     NSLog(@"[INFO] module continueUserActivity - %@", args);
 
-    ENSURE_ARG_COUNT(args, 3);
-    ENSURE_TYPE([args objectAtIndex:0], NSString);
-    ENSURE_TYPE([args objectAtIndex:1], NSString);
-    ENSURE_TYPE([args objectAtIndex:2], NSDictionary);
+    // ENSURE_ARG_COUNT(args, 3);
+    // ENSURE_TYPE([args objectAtIndex:0], NSString);
+    // ENSURE_TYPE([args objectAtIndex:1], NSString);
+    // ENSURE_TYPE([args objectAtIndex:2], NSDictionary);
 
-    NSString *activityType = (NSString *)[args objectAtIndex:0];
-    NSURL *webpageURL = [NSURL URLWithString:(NSString *)[args objectAtIndex:1]];
-    NSDictionary *userInfo = (NSDictionary*)[args objectAtIndex:2];
+    // NSString *activityType = (NSString *)[args objectAtIndex:0];
+    // NSURL *webpageURL = [NSURL URLWithString:(NSString *)[args objectAtIndex:1]];
+    // NSDictionary *userInfo = (NSDictionary*)[args objectAtIndex:2];
 
-    NSUserActivity *userActivity = [[NSUserActivity alloc] initWithActivityType:activityType];
-    [userActivity setWebpageURL:webpageURL];
-    [userActivity setUserInfo:userInfo];
+    // NSUserActivity *userActivity = [[NSUserActivity alloc] initWithActivityType:activityType];
+    // [userActivity setWebpageURL:webpageURL];
+    // [userActivity setUserInfo:userInfo];
 
-    Branch *branch = [self getInstance];
+    // Branch *branch = [self getInstance];
 
-    [branch continueUserActivity:userActivity];
+    // [branch continueUserActivity:userActivity];
 }
 
 @end

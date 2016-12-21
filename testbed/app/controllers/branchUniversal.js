@@ -81,6 +81,7 @@ $.onGenerateUrlButtonClicked = function() {
     }, function (res) {
         Ti.API.info('Generated Short URL');
         Ti.API.info(res);
+        $.linkTextArea.setValue(res["generatedLink"]);
     });
 }
 

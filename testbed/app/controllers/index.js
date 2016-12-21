@@ -38,23 +38,22 @@ $.initialize = function(params) {
 
 $.initializeViews = function() {
     Ti.API.info("start initializeViews");
+    Ti.API.info(Ti.Filesystem.externalStorageDirectory);
+    Ti.API.info(Ti.Filesystem.applicationCacheDirectory);
+
     Titanium.UI.setBackgroundColor('green');
 };
 
 $.initializeHandlers = function() {
     if (OS_IOS) {
+        
         Ti.App.iOS.addEventListener('continueactivity', function(e) {
+            Ti.API.info(e.activityType)
             Ti.API.info("inside continueactivity: " + JSON.stringify(e));
-            if (e.activityType === 'io.branch.testbed.universalLink') {
-                branch.continueUserActivity(e.activityType, e.webpageURL, e.userInfo);
-            }
+            
         });
 
-        var activity = Ti.App.iOS.createUserActivity({
-            activityType:'io.branch.testbed.universalLink'
-        });
-
-        activity.becomeCurrent();
+       
     } 
 
     $.getSessionButton.addEventListener('click', $.onGetSessionButtonClicked);
