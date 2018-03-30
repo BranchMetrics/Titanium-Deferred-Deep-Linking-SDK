@@ -61,13 +61,13 @@ $.onInitBranchButtonClicked = function() {
     $.toggleButtons(true);
 
     showData({"init BUO":"success"});
-}
+};
 
 $.onRegisterViewButtonClicked = function() {
     Ti.API.info("inside onRegisterViewButtonClicked");
     branchUniversalObjectProxy.registerView();
     showData({"registerView":"success"});
-}
+};
 
 $.onGenerateUrlButtonClicked = function() {
     Ti.API.info("inside onGenerateUrlButtonClicked");
@@ -79,17 +79,18 @@ $.onGenerateUrlButtonClicked = function() {
     }, {
         "$desktop_url" : "http://desktop_url.com",
     }, function (res) {
+    	alert(res);
         Ti.API.info('Generated Short URL');
         Ti.API.info(res);
         $.linkTextArea.setValue(res["generatedLink"]);
     });
-}
+};
 
 $.onGenerateUrlFinished = function(data) {
     Ti.API.info("inside onGenerateUrlFinished");
     Ti.API.info("GenerateUrlFinished: " + data["generatedLink"]);
     $.linkTextArea.setValue(data["generatedLink"]);
-}
+};
 
 $.onShareSheetButtonClicked = function() {
     Ti.API.info("inside onShareSheetButtonClicked");
@@ -103,29 +104,29 @@ $.onShareSheetButtonClicked = function() {
         "$email_subject" : "This is a sample subject",
         "$email_body" : "This is a sample body",
     });
-}
+};
 
 $.onShareLinkDialogLaunched = function(data) {
     Ti.API.info("inside onShareLinkDialogLaunched");
-}
+};
 
 $.onShareLinkDialogDismissed = function(data) {
     Ti.API.info("inside onShareLinkDialogDismissed");
-}
+};
 
 $.onShareLinkResponse = function(data) {
     Ti.API.info("inside onShareLinkResponse");
-}
+};
 
 $.onShareChannelSelected = function(data) {
     Ti.API.info("inside onShareChannelSelected");
-}
+};
 
 $.onCopyButtonClicked = function() {
     Ti.API.info("inside onCopyButtonClicked");
     Ti.UI.Clipboard.clearText();
     Ti.UI.Clipboard.setText($.linkTextArea.getValue());
-}
+};
 
 /*
  ************************************************
@@ -136,7 +137,7 @@ $.toggleButtons = function(enable) {
     $.registerViewButton.enabled = enable;
     $.generateUrlButton.enabled = enable;
     $.shareSheetButton.enabled = enable;
-}
+};
 
 function showData(data) {
     Ti.API.info("start showData");

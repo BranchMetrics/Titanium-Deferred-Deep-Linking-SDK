@@ -33,7 +33,6 @@ $.initialize = function(params) {
 
         Ti.Android.currentActivity.addEventListener("newintent", function(e) {
             Ti.API.info("inside newintent: " + JSON.stringify(e));
-            $.window.open();
             branch.updateIntent(e.intent);
 
         });
@@ -52,7 +51,7 @@ $.initializeHandlers = function() {
     if (OS_IOS) {
 
         Ti.App.iOS.addEventListener('continueactivity', function(e) {
-            Ti.API.info(e.activityType)
+            Ti.API.info(e.activityType);
             Ti.API.info("inside continueactivity: " + JSON.stringify(e));
 
         });
@@ -87,24 +86,24 @@ $.onInitSessionFinished = function(data) {
     Ti.API.info("inside onInitSessionFinished");
     showData(data);
     alert(data);
-}
+};
 
 $.onLogoutFinished = function() {
     Ti.API.info("inside onLogoutFinished");
     alert("Logout Success!");
-}
+};
 
 $.onGetSessionButtonClicked = function() {
     Ti.API.info("inside onGetSessionButtonClicked");
     var sessionParams = branch.getLatestReferringParams();
     showData(sessionParams);
-}
+};
 
 $.onGetInstallSessionButtonClicked = function() {
     Ti.API.info("inside onGetInstallSessionButtonClicked");
     var installParams = branch.getFirstReferringParams();
     showData(installParams);
-}
+};
 
 $.onSetIdentityButtonClicked = function() {
     Ti.API.info("inside onSetIdentityButtonClicked");
@@ -121,56 +120,56 @@ $.onSetIdentityButtonClicked = function() {
             }
         });
     }
-}
+};
 
 $.onCustomActionButtonClicked = function() {
     Ti.API.info("inside onCustomActionButtonClicked");
     branch.userCompletedAction($.customActionTextField.getValue());
     showData({"userCompletedAction":$.customActionTextField.getValue()});
-}
+};
 
 $.onBranchUniversalButtonClicked = function() {
     Ti.API.info("inside onBranchUniversalButtonClicked");
     var branchUniversalWin = Alloy.createController('branchUniversal', {});
     view = branchUniversalWin.getView();
     view.open();
-}
+};
 
 $.onLogoutButtonClicked = function() {
     Ti.API.info("inside onLogoutButtonClicked");
     branch.logout();
-}
+};
 
 $.onRewardBalanceButtonClicked = function() {
     Ti.API.info("inside onRewardBalanceButtonClicked");
     branch.loadRewards();
-}
+};
 
 $.onLoadRewardFinished = function(data) {
     Ti.API.info("inside onLoadRewardFinished");
     showData(data);
-}
+};
 
 $.onRedeemRewardButtonClicked = function() {
     Ti.API.info("inside onRedeemRewardButtonClicked");
     branch.redeemRewards(5);
     showData({"redeemRewards":5});
-}
+};
 
 $.onCreditHistoryButtonClicked = function() {
     Ti.API.info("inside onCreditHistoryButtonClicked");
     branch.getCreditHistory();
-}
+};
 
 $.onGetCreditHistoryFinished = function(data) {
     Ti.API.info("inside onGetCreditHistoryFinished");
     showData(data);
-}
+};
 
 $.onRedeemRewardFinished = function(data) {
     Ti.API.info("redeem reward finished");
     showData(data);
-}
+};
 
 /*
  ************************************************

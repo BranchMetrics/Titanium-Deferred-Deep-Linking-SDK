@@ -1,0 +1,20 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+#version: 1.6.4
+#apiversion: 3
+version: 2.0.0
+apiversion: 4
+architectures: arm64-v8a armeabi-v7a x86
+description: Titanium-Deferred-Deep-Linking-SDK
+author: Branch Metrics
+license: MIT
+copyright: Copyright (c) 2017 by Branch Metrics
+
+# these should not be edited
+name: Titanium-Deferred-Deep-Linking-SDK
+moduleid: io.branch.sdk
+guid: df14a182-464d-4940-bc1d-ae84730366a8
+platform: android
+minsdk: 7.1.0.GA

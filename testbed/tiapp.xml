@@ -117,7 +117,7 @@
     <target device="ipad">true</target>
     <target device="iphone">true</target>
   </deployment-targets>
-  <sdk-version>6.2.2.GA</sdk-version>
+  <sdk-version>7.1.0.GA</sdk-version>
   <plugins>
     <plugin version="1.0">ti.alloy</plugin>
   </plugins>
